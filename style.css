@@ -35,6 +35,13 @@ body {
     margin-bottom: 30px;
   }
   
+  @media screen and (max-width: 600px) {
+    iframe {
+      height: 450px;
+    }
+  }
+  
+
   iframe {
     border-radius: 10px;
     border: 1px solid #ccc;
