@@ -18,12 +18,17 @@
       padding: 20px;
       margin: 0;
     }
-    iframe {
+    .iframe-container {
+      width: 100%;
+      overflow-x: auto;
+    }
+    .iframe-container iframe {
+      min-width: 1200px;
+      width: 100%;
+      height: 800px;
+      border: none;
       display: block;
       margin: 30px auto;
-      border: none;
-      width: 90%;
-      height: 700px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       border-radius: 10px;
     }
@@ -40,37 +45,33 @@
 
   <h1>Jadwal Kuliah M2024D</h1>
 
-  <!-- Embed Google Sheets jadwal -->
-  <div style="width: 100%; overflow-x: auto;">
+  <!-- Embed Google Sheets dalam container yang bisa scroll horizontal -->
+  <div class="iframe-container">
     <iframe 
-      src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSmmOZwVfq5lGqw8iTp_633FEtVQNq4MdS9YMfuWLyxzhMQBYVZU6IbXJyk-Vocr3Hjoa5nrmqt8xvc/pubhtml?widget=true&amp;headers=false"
-      width="1200" 
-      height="800"
-      style="min-width: 1200px; border: none;">
+      src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSmmOZwVfq5lGqw8iTp_633FEtVQNq4MdS9YMfuWLyxzhMQBYVZU6IbXJyk-Vocr3Hjoa5nrmqt8xvc/pubhtml?widget=true&amp;headers=false">
     </iframe>
   </div>
-          
+
   <!-- Info terakhir diubah -->
   <div class="update-info" id="last-updated">
     📅 Memuat informasi update...
   </div>
 
-  <!-- Script untuk fetch data dari Google Sheets -->
+  <!-- Script dummy untuk update info terakhir (masih simulasi karena Google Sheets tidak expose timestamp via embed) -->
   <script>
-    async function ambilUpdateTerakhir() {
-      try {
-        const response = await fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vSmmOZwVfq5lGqw8iTp_633FEtVQNq4MdS9YMfuWLyxzhMQBYVZU6IbXJyk-Vocr3Hjoa5nrmqt8xvc/pubhtml");
-        const text = await response.text();
-        const lines = text.trim().split("\n");
-        const lastLine = lines[lines.length - 1]; // Ambil baris terakhir
-        document.getElementById("last-updated").innerText = lastLine;
-      } catch (error) {
-        document.getElementById("last-updated").innerText = "⚠️ Gagal memuat waktu update.";
-        console.error("Gagal ambil data:", error);
-      }
-    }
-
-    ambilUpdateTerakhir();
+    const now = new Date();
+    const tanggal = now.toLocaleDateString("id-ID", {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+    const waktu = now.toLocaleTimeString("id-ID", {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    });
+    document.getElementById("last-updated").innerText = `📌 Terakhir diperbarui: ${tanggal}, pukul ${waktu}`;
   </script>
 
 </body>
